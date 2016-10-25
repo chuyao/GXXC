@@ -9,9 +9,10 @@ import java.io.Serializable;
 public class NewsModel implements Serializable {
 
     private String title;
-    private String time;
+    private String date;
     private String author;
     private String origin;
+    private String url;
 
     public String getTitle() {
         return title;
@@ -37,11 +38,19 @@ public class NewsModel implements Serializable {
         this.author = author;
     }
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

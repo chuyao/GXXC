@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.gov.gxxc.model.TextNewsDetailModel;
 import cn.gov.gxxc.model.TextNewsModel;
 import cn.gov.gxxc.model.VideoNewsModel;
 
@@ -24,11 +25,12 @@ public class JsoupManager {
         return manager;
     }
 
-    private JsoupManager () {
+    private JsoupManager() {
     }
 
     /**
      * 文本新闻列表获取
+     *
      * @param page
      * @return
      */
@@ -39,7 +41,7 @@ public class JsoupManager {
             Document doc = Jsoup.connect(url).get();
             Element element = doc.select("div.article-list").first();
             Elements elements = element.select("li");
-            for(Element e : elements) {
+            for (Element e : elements) {
                 Element e1 = e.select("a").first();
                 String link = e1.attr("href");
                 String title = e1.attr("title");
@@ -57,7 +59,41 @@ public class JsoupManager {
     }
 
     /**
+     * 文本新闻详情获取
+     * @param url
+     * @return
+     */
+    public TextNewsDetailModel getTextNewsDetail(String url) {
+        String detailUrl = URLs.BASE_URL + url;
+        TextNewsDetailModel model = null;
+        try {
+            Document doc = Jsoup.connect(detailUrl).get();
+            Element element = doc.select("div.article").first();
+            String title = element.select("h1.art-title").first().text();
+            String info = element.select("div.art-info").first().text();
+            Element contentElement = element.select("div.art-content").first();
+            List<String> images = new ArrayList<>();
+            if (!contentElement.getElementsByTag("img").isEmpty()) {
+                Elements children = contentElement.children();
+                for (int i = children.size() - 1; i > 0; i--) {
+                    if (contentElement.child(i).getElementsByTag("img").isEmpty()) {
+                        String image = contentElement.child(i).select("img").first().attr("src");
+                        images.add(image);
+                        contentElement.getElementsByIndexGreaterThan(i).remove();
+                    }
+                }
+            }
+            String content = element.select("div.art-content").first().text();
+            model = new TextNewsDetailModel(title, images, content, info);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+
+    /**
      * 视频新闻列表获取
+     *
      * @param page
      * @return
      */
@@ -68,7 +104,7 @@ public class JsoupManager {
             Document doc = Jsoup.connect(url).get();
             Element element = doc.select("div.article-list").first();
             Elements elements = element.select("li");
-            for(Element e : elements) {
+            for (Element e : elements) {
                 Element e1 = e.select("a").first();
                 String link = e1.attr("href");
                 String title = e1.attr("title");

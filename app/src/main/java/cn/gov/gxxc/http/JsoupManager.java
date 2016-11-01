@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.gov.gxxc.model.TextNewsDetailModel;
 import cn.gov.gxxc.model.TextNewsModel;
 import cn.gov.gxxc.model.VideoNewsModel;
 
@@ -63,28 +62,33 @@ public class JsoupManager {
      * @param url
      * @return
      */
-    public TextNewsDetailModel getTextNewsDetail(String url) {
+    public TextNewsModel getTextNewsDetail(String url) {
         String detailUrl = URLs.BASE_URL + url;
-        TextNewsDetailModel model = null;
+        TextNewsModel model = null;
         try {
             Document doc = Jsoup.connect(detailUrl).get();
             Element element = doc.select("div.article").first();
             String title = element.select("h1.art-title").first().text();
             String info = element.select("div.art-info").first().text();
+            info = info.substring(0, info.indexOf("来源"));
             Element contentElement = element.select("div.art-content").first();
             List<String> images = new ArrayList<>();
             if (!contentElement.getElementsByTag("img").isEmpty()) {
-                Elements children = contentElement.children();
-                for (int i = children.size() - 1; i > 0; i--) {
-                    if (contentElement.child(i).getElementsByTag("img").isEmpty()) {
-                        String image = contentElement.child(i).select("img").first().attr("src");
-                        images.add(image);
-                        contentElement.getElementsByIndexGreaterThan(i).remove();
-                    }
+//                Elements children = contentElement.children();
+//                for (int i = children.size() - 1; i > 0; i--) {
+//                    if (!contentElement.child(i).getElementsByTag("img").isEmpty()) {
+//                        String image = contentElement.child(i).select("img").first().attr("src");
+//                        images.add(image);
+//                        contentElement.getElementsByIndexGreaterThan(i).remove();
+//                    }
+//                }
+                Elements elements = contentElement.select("img");
+                for(Element e : elements) {
+                    images.add(e.attr("src"));
                 }
             }
-            String content = element.select("div.art-content").first().text();
-            model = new TextNewsDetailModel(title, images, content, info);
+            String content = contentElement.text();
+            model = new TextNewsModel(title, info, content, images);
         } catch (IOException e) {
             e.printStackTrace();
         }

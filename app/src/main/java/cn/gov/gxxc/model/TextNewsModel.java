@@ -8,8 +8,27 @@ import java.util.List;
 
 public class TextNewsModel extends NewsModel {
 
+    private String info;
     private String content;
     private List<String> images;
+
+    public TextNewsModel() {
+    }
+
+    public TextNewsModel(String title, String info, String content, List<String> images) {
+        this.info = info;
+        this.content = content;
+        this.images = images;
+        super.setTitle(title);
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public String getContent() {
         return content;

@@ -1,12 +1,12 @@
-package cn.gov.gxxc;
+package cn.gov.gxxc.activity;
 
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import cn.gov.gxxc.R;
 import cn.gov.gxxc.adapter.NewsListFragmentAdapter;
-import cn.gov.gxxc.adapter.TextNewsListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

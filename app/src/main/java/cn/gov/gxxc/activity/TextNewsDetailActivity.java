@@ -1,17 +1,19 @@
-package cn.gov.gxxc;
+package cn.gov.gxxc.activity;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.GridView;
 import android.widget.TextView;
 
+import cn.gov.gxxc.R;
+import cn.gov.gxxc.adapter.NewsDetailImagesAdapter;
 import cn.gov.gxxc.http.JsoupManager;
-import cn.gov.gxxc.http.URLs;
 import cn.gov.gxxc.model.TextNewsModel;
 
-public class TextNewsDetailActivity extends AppCompatActivity {
+public class TextNewsDetailActivity extends BaseActivity {
 
     private TextView tvTitle, tvInfo, tvContent;
+    private GridView gvImages;
 
 
     @Override
@@ -27,9 +29,11 @@ public class TextNewsDetailActivity extends AppCompatActivity {
         tvContent = (TextView) findViewById(R.id.tv_content);
         tvInfo = (TextView) findViewById(R.id.tv_info);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        gvImages = (GridView) findViewById(R.id.gv_images);
+        gvImages.setFocusable(false);
     }
 
-    private void refresh(String url){
+    private void refresh(String url) {
         new AsyncTask<String, Integer, TextNewsModel>() {
             @Override
             protected TextNewsModel doInBackground(String... params) {
@@ -48,5 +52,13 @@ public class TextNewsDetailActivity extends AppCompatActivity {
         tvTitle.setText(model.getTitle());
         tvInfo.setText(model.getInfo());
         tvContent.setText(model.getContent());
+        updateGridImages(model);
+    }
+
+    private void updateGridImages(TextNewsModel model) {
+        if (!model.getImages().isEmpty()) {
+            gvImages.setNumColumns(model.getImages().size() > 3 ? 3 : model.getImages().size());
+            gvImages.setAdapter(new NewsDetailImagesAdapter(this, model.getImages()));
+        }
     }
 }

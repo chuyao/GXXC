@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.gov.gxxc.R;
-import cn.gov.gxxc.TextNewsDetailActivity;
+import cn.gov.gxxc.activity.TextNewsDetailActivity;
 import cn.gov.gxxc.adapter.TextNewsListAdapter;
 import cn.gov.gxxc.http.JsoupManager;
 import cn.gov.gxxc.model.TextNewsModel;

@@ -84,7 +84,7 @@ public class JsoupManager {
 //                }
                 Elements elements = contentElement.select("img");
                 for(Element e : elements) {
-                    images.add(e.attr("src"));
+                    images.add(URLs.BASE_URL + e.attr("src"));
                 }
             }
             String content = contentElement.text();

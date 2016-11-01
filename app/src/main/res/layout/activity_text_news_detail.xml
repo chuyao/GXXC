@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context="cn.gov.gxxc.TextNewsDetailActivity">
+    tools:context="cn.gov.gxxc.activity.TextNewsDetailActivity"
+    android:scrollbars="none"
+    android:fadeScrollbars="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,18 +21,24 @@
             android:id="@+id/tv_info"
             android:layout_below="@id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
         <TextView
             android:id="@+id/tv_content"
             android:layout_below="@id/tv_info"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="8dp"
+            android:textSize="16sp"/>
         <GridView
             android:id="@+id/gv_images"
             android:layout_below="@id/tv_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></GridView>
+            android:layout_height="wrap_content"
+            android:minHeight="20dp"
+            android:horizontalSpacing="1dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"></GridView>
     </RelativeLayout>
 
 </ScrollView>

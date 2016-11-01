@@ -125,4 +125,16 @@ public class JsoupManager {
         return list;
     }
 
+    public VideoNewsModel getVideoNewsDetail(String url) {
+        VideoNewsModel model = null;
+        url = URLs.BASE_URL + url;
+        try {
+            Document doc = Jsoup.connect(url).get();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+
 }

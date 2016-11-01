@@ -6,7 +6,17 @@ package cn.gov.gxxc.model;
 
 public class VideoNewsModel extends NewsModel {
 
+    private String info;
+
     private String path;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public String getPath() {
         return path;

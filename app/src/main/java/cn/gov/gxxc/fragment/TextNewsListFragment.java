@@ -57,7 +57,14 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh(0);
+//        refresh(0);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                swipeRefreshLayout.onRefresh();
+            }
+        });
     }
 
     private void initViews(View view){

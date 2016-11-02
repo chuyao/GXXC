@@ -47,7 +47,8 @@ public class TextNewsDetailActivity extends BaseActivity {
             @Override
             protected void onPostExecute(TextNewsModel textNewsModel) {
                 super.onPostExecute(textNewsModel);
-                updateViews(textNewsModel);
+                if(textNewsModel != null)
+                    updateViews(textNewsModel);
             }
         }.execute(url);
     }

@@ -44,8 +44,7 @@
             android:layout_below="@id/tv_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:horizontalSpacing="1dp"
-            android:minHeight="20dp"
-            android:verticalSpacing="1dp"></cn.gov.gxxc.widget.XGridView>
+            android:verticalSpacing="1dp" />
     </RelativeLayout>
 
 </ScrollView>

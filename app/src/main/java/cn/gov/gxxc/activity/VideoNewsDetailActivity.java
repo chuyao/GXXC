@@ -61,7 +61,8 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
             @Override
             protected void onPostExecute(VideoNewsModel videoNewsModel) {
                 super.onPostExecute(videoNewsModel);
-                updateViews(videoNewsModel);
+                if(videoNewsModel != null)
+                    updateViews(videoNewsModel);
             }
         }.execute(url);
     }

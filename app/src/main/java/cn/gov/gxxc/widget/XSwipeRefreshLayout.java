@@ -44,6 +44,7 @@ public class XSwipeRefreshLayout extends SwipeRefreshLayout implements AbsListVi
         super(context, attrs);
         mFooterView = LayoutInflater.from(context).inflate(R.layout.layout_refresh_footer, null, false);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        setColorSchemeResources(R.color.color_scheme_1, R.color.color_scheme_2, R.color.color_scheme_3);
         setOnRefreshListener(this);
     }
 

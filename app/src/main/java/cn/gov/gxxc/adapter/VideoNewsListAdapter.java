@@ -58,7 +58,7 @@ public class VideoNewsListAdapter extends BaseAdapter {
         final VideoNewsModel model = list.get(position);
         holder.tvDate.setText(model.getDate());
         holder.tvTitle.setText(model.getTitle());
-        holder.iv_pre.setImageResource(R.mipmap.ic_launcher);
+        holder.iv_pre.setImageResource(R.mipmap.ic_play_circle_outline_black_36dp);
         return convertView;
     }
 

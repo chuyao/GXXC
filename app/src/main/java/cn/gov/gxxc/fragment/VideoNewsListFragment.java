@@ -59,7 +59,13 @@ public class VideoNewsListFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh(1);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                swipeRefreshLayout.onRefresh();
+            }
+        });
     }
 
     private void initViews(View view) {

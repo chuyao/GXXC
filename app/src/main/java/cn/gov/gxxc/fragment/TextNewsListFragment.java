@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,8 @@ import cn.gov.gxxc.widget.XSwipeRefreshLayout;
  */
 
 public class TextNewsListFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private static final String TAG = "TextNewsListFragment";
 
     private ListView mListView;
     private BaseAdapter mAdapter;
@@ -110,5 +114,17 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
         Intent intent = new Intent(getActivity(), TextNewsDetailActivity.class);
         intent.putExtra("url", mList.get(position).getUrl());
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 }

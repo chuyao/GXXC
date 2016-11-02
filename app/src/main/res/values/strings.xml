@@ -5,4 +5,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="activity_text_news_detail">忻城新闻</string>
     <string name="activity_video_news_detail">视频新闻</string>
+    <string name="banner_ad_unit_id">ca-app-pub-5065614493130923/3816543093</string>
 </resources>

@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.gov.gxxc.R;
 import cn.gov.gxxc.adapter.NewsDetailImagesAdapter;
 import cn.gov.gxxc.http.JsoupManager;
 import cn.gov.gxxc.model.TextNewsModel;
 
 public class TextNewsDetailActivity extends BaseActivity {
+
+    private static final String TAG = "TextNewsDetailActivity";
 
     private TextView tvTitle, tvInfo, tvContent;
     private GridView gvImages;
@@ -60,5 +64,19 @@ public class TextNewsDetailActivity extends BaseActivity {
             gvImages.setNumColumns(model.getImages().size() > 3 ? 3 : model.getImages().size());
             gvImages.setAdapter(new NewsDetailImagesAdapter(this, model.getImages()));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+        MobclickAgent.onPause(this);
     }
 }

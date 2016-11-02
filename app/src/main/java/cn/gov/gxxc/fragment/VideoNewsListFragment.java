@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ import cn.gov.gxxc.widget.XSwipeRefreshLayout;
  * A simple {@link Fragment} subclass.
  */
 public class VideoNewsListFragment extends Fragment implements AdapterView.OnItemClickListener{
+
+    private static final String TAG = "VideoNewsListFragment";
 
     private ListView listView;
     private BaseAdapter adapter;
@@ -114,4 +118,16 @@ public class VideoNewsListFragment extends Fragment implements AdapterView.OnIte
         startActivity(intent);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+    }
 }

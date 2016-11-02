@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "777547425948",
+    "firebase_url": "https://gxxc-d6d82.firebaseio.com",
+    "project_id": "gxxc-d6d82",
+    "storage_bucket": "gxxc-d6d82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777547425948:android:1be9b828a2f99873",
+        "android_client_info": {
+          "package_name": "cn.gov.gxxc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777547425948-rchuhrd2q3qsib2oe6a56cgcm2467ut4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS0dPbWlywf6nus5aRGuCqrZch1bbVySE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

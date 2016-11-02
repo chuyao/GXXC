@@ -20,6 +20,7 @@ import cn.gov.gxxc.activity.TextNewsDetailActivity;
 import cn.gov.gxxc.adapter.TextNewsListAdapter;
 import cn.gov.gxxc.http.JsoupManager;
 import cn.gov.gxxc.model.TextNewsModel;
+import cn.gov.gxxc.widget.XSwipeRefreshLayout;
 
 /**
  * 文字新闻列表fragment
@@ -30,8 +31,11 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
 
     private ListView mListView;
     private BaseAdapter mAdapter;
+    private XSwipeRefreshLayout swipeRefreshLayout;
 
     private List<TextNewsModel> mList = new ArrayList<>();
+
+    private int currentPage = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+        refresh(0);
     }
 
     private void initViews(View view){
@@ -57,9 +61,24 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
         mAdapter = new TextNewsListAdapter(getActivity(), mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
+        swipeRefreshLayout = (XSwipeRefreshLayout) view.findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setOnLoadListener(onLoadListener);
     }
 
-    private void refresh() {
+    final XSwipeRefreshLayout.OnLoadListener onLoadListener = new XSwipeRefreshLayout.OnLoadListener() {
+        @Override
+        public void onLoad() {
+            refresh(currentPage);
+        }
+
+        @Override
+        public void onRefresh() {
+            currentPage = 1;
+            refresh(1);
+        }
+    };
+
+    private void refresh(int page) {
         new AsyncTask<Integer, Integer, List<TextNewsModel>>() {
             @Override
             protected List<TextNewsModel> doInBackground(Integer... params) {
@@ -69,10 +88,21 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
             @Override
             protected void onPostExecute(List<TextNewsModel> textNewsModels) {
                 super.onPostExecute(textNewsModels);
+                resetSwipeStatus();
                 mList.addAll(textNewsModels);
                 mAdapter.notifyDataSetChanged();
+                currentPage++;
             }
-        }.execute(0);
+        }.execute(page);
+    }
+
+    private void resetSwipeStatus(){
+        if(swipeRefreshLayout.status == XSwipeRefreshLayout.Status.LOAD) {
+            swipeRefreshLayout.setLoading(false);
+        }else if(swipeRefreshLayout.status == XSwipeRefreshLayout.Status.REFRESH){
+            swipeRefreshLayout.setRefreshing(false);
+            mList.clear();
+        }
     }
 
     @Override

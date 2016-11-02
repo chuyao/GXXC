@@ -130,7 +130,13 @@ public class JsoupManager {
         url = URLs.BASE_URL + url;
         try {
             Document doc = Jsoup.connect(url).get();
-
+            Element element = doc.select("div.article").first();
+            String title = element.select("h1.art-title").first().text();
+            String info = element.select("div.art-info").first().text();
+            info = info.substring(0, info.indexOf("来源"));
+            Element videoElement = element.select("video").first();
+            String path = videoElement.select("source").first().attr("src");
+            model = new VideoNewsModel(title, info, path);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,6 +10,15 @@ public class VideoNewsModel extends NewsModel {
 
     private String path;
 
+    public VideoNewsModel() {
+    }
+
+    public VideoNewsModel(String title, String info, String path) {
+        super.setTitle(title);
+        this.info = info;
+        this.path = path;
+    }
+
     public String getInfo() {
         return info;
     }

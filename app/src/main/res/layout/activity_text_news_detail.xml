@@ -4,41 +4,48 @@
     android:id="@+id/activity_text_news_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin"
-    tools:context="cn.gov.gxxc.activity.TextNewsDetailActivity"
+    android:fadeScrollbars="true"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
     android:scrollbars="none"
-    android:fadeScrollbars="true">
+    tools:context="cn.gov.gxxc.activity.TextNewsDetailActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/colorBlack"/>
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/tv_info"
-            android:layout_below="@id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="10dp" />
+
         <TextView
             android:id="@+id/tv_content"
-            android:layout_below="@id/tv_info"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_info"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:lineSpacingExtra="8dp"
-            android:textSize="16sp"/>
-        <GridView
+            android:textSize="16sp" />
+
+        <cn.gov.gxxc.widget.XGridView
             android:id="@+id/gv_images"
-            android:layout_below="@id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="20dp"
+            android:layout_below="@id/tv_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:horizontalSpacing="1dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"></GridView>
+            android:minHeight="20dp"
+            android:verticalSpacing="1dp"></cn.gov.gxxc.widget.XGridView>
     </RelativeLayout>
 
 </ScrollView>

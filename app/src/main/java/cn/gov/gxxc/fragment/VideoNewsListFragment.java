@@ -23,6 +23,7 @@ import cn.gov.gxxc.adapter.VideoNewsListAdapter;
 import cn.gov.gxxc.http.JsoupManager;
 import cn.gov.gxxc.model.TextNewsModel;
 import cn.gov.gxxc.model.VideoNewsModel;
+import cn.gov.gxxc.widget.XSwipeRefreshLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +33,10 @@ public class VideoNewsListFragment extends Fragment implements AdapterView.OnIte
     private ListView listView;
     private BaseAdapter adapter;
     private List<VideoNewsModel> list = new ArrayList<>();
+
+    private XSwipeRefreshLayout swipeRefreshLayout;
+
+    private int currentPage = 1;
 
     public VideoNewsListFragment() {
         // Required empty public constructor
@@ -50,16 +55,32 @@ public class VideoNewsListFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+        refresh(1);
     }
 
     private void initViews(View view) {
         listView = (ListView) view.findViewById(R.id.list);
         adapter = new VideoNewsListAdapter(getActivity(), list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+        swipeRefreshLayout = (XSwipeRefreshLayout) view.findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setOnLoadListener(onLoadListener);
     }
 
-    private void refresh() {
+    final XSwipeRefreshLayout.OnLoadListener onLoadListener = new XSwipeRefreshLayout.OnLoadListener() {
+        @Override
+        public void onLoad() {
+            refresh(currentPage);
+        }
+
+        @Override
+        public void onRefresh() {
+            currentPage = 1;
+            refresh(1);
+        }
+    };
+
+    private void refresh(int page) {
         new AsyncTask<Integer, Integer, List<VideoNewsModel>>() {
             @Override
             protected List<VideoNewsModel> doInBackground(Integer... params) {
@@ -69,10 +90,21 @@ public class VideoNewsListFragment extends Fragment implements AdapterView.OnIte
             @Override
             protected void onPostExecute(List<VideoNewsModel> videoNewsModels) {
                 super.onPostExecute(videoNewsModels);
+                resetSwipeStatus();
                 list.addAll(videoNewsModels);
                 adapter.notifyDataSetChanged();
+                currentPage++;
             }
-        }.execute(0);
+        }.execute(page);
+    }
+
+    private void resetSwipeStatus(){
+        if(swipeRefreshLayout.status == XSwipeRefreshLayout.Status.LOAD) {
+            swipeRefreshLayout.setLoading(false);
+        }else if(swipeRefreshLayout.status == XSwipeRefreshLayout.Status.REFRESH){
+            swipeRefreshLayout.setRefreshing(false);
+            list.clear();
+        }
     }
 
     @Override

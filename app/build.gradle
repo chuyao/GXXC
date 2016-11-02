@@ -11,10 +11,31 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    signingConfigs {
+//        debug {
+//            storeFile file(DEBUG_STORE_FILE)
+//        }
+        release {
+            def jksFile = file("../local.properties")
+            Properties properties = new Properties();
+            jksFile.withInputStream {stream -> properties.load(stream)}
+            storeFile file(properties.RELEASE_STORE_FILE)
+            storePassword properties.RELEASE_STORE_PASSWORD
+            keyAlias properties.RELEASE_KEY_ALIAS
+            keyPassword properties.RELEASE_KEY_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

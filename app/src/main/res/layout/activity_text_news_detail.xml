@@ -37,7 +37,7 @@
             android:lineSpacingExtra="8dp"
             android:textSize="16sp" />
 
-        <cn.gov.gxxc.widget.XGridView
+        <com.santu.gxxc.widget.XGridView
             android:id="@+id/gv_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

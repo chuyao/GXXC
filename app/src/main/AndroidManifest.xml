@@ -34,7 +34,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <meta-data android:name="UMENG_APPKEY" android:value="58199ddd1061d23898002cc2" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="10001" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="10002" />
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
     </application>
 

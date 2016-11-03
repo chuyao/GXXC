@@ -3,7 +3,9 @@ package cn.gov.gxxc.activity;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -22,6 +24,7 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
 
     private VideoView videoView;
     private TextView tvTitle, tvInfo;
+    private ProgressBar progressBar;
 
     private MediaController mediaController;
 
@@ -42,6 +45,7 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         tvInfo = (TextView) findViewById(R.id.tv_info);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         videoView = (VideoView) findViewById(R.id.video_view);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mediaController = new MediaController(this);
         videoView.setMediaController(mediaController);
         videoView.requestFocus();
@@ -63,6 +67,8 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
                 super.onPostExecute(videoNewsModel);
                 if(videoNewsModel != null)
                     updateViews(videoNewsModel);
+                else
+                    progressBar.setVisibility(View.GONE);
             }
         }.execute(url);
     }
@@ -77,6 +83,7 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        progressBar.setVisibility(View.GONE);
         mediaController.show();
     }
 

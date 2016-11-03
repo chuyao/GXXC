@@ -2,7 +2,9 @@ package cn.gov.gxxc.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -18,6 +20,7 @@ public class TextNewsDetailActivity extends BaseActivity {
 
     private TextView tvTitle, tvInfo, tvContent;
     private GridView gvImages;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -33,6 +36,7 @@ public class TextNewsDetailActivity extends BaseActivity {
         tvContent = (TextView) findViewById(R.id.tv_content);
         tvInfo = (TextView) findViewById(R.id.tv_info);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         gvImages = (GridView) findViewById(R.id.gv_images);
         gvImages.setFocusable(false);
     }
@@ -49,6 +53,7 @@ public class TextNewsDetailActivity extends BaseActivity {
                 super.onPostExecute(textNewsModel);
                 if(textNewsModel != null)
                     updateViews(textNewsModel);
+                progressBar.setVisibility(View.GONE);
             }
         }.execute(url);
     }

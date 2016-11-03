@@ -32,11 +32,11 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <!--<MediaController-->
-            <!--android:id="@+id/controller"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom|center_horizontal"/>-->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
     </FrameLayout>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

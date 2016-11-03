@@ -53,6 +53,7 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         mAdView.loadAd(adRequest);
+
     }
 
     private void refresh(String url){

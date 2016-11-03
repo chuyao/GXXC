@@ -4,7 +4,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "24.0.1"
     defaultConfig {
-        applicationId "cn.gov.gxxc"
+        applicationId "com.santu.gxxc"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -21,13 +21,13 @@ android {
 //            storeFile file(DEBUG_STORE_FILE)
 //        }
         release {
-            def jksFile = file("../local.properties")
-            Properties properties = new Properties();
-            jksFile.withInputStream {stream -> properties.load(stream)}
-            storeFile file(properties.RELEASE_STORE_FILE)
-            storePassword properties.RELEASE_STORE_PASSWORD
-            keyAlias properties.RELEASE_KEY_ALIAS
-            keyPassword properties.RELEASE_KEY_PASSWORD
+//            def jksFile = file("../local.properties")
+//            Properties properties = new Properties();
+//            jksFile.withInputStream {stream -> properties.load(stream)}
+//            storeFile file(properties.RELEASE_STORE_FILE)
+//            storePassword properties.RELEASE_STORE_PASSWORD
+//            keyAlias properties.RELEASE_KEY_ALIAS
+//            keyPassword properties.RELEASE_KEY_PASSWORD
         }
     }
 

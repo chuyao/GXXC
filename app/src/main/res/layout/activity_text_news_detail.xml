@@ -7,7 +7,7 @@
     android:fadeScrollbars="true"
     android:paddingBottom="@dimen/activity_horizontal_margin"
     android:scrollbars="none"
-    tools:context="cn.gov.gxxc.activity.TextNewsDetailActivity">
+    tools:context="com.santu.gxxc.activity.TextNewsDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

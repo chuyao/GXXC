@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:777547425948:android:1be9b828a2f99873",
+        "mobilesdk_app_id": "1:777547425948:android:7215e2626ad9bfb1",
         "android_client_info": {
-          "package_name": "cn.gov.gxxc"
+          "package_name": "com.santu.gxxc"
         }
       },
       "oauth_client": [

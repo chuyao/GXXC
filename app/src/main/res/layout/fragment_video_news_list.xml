@@ -1,9 +1,9 @@
-<cn.gov.gxxc.widget.XSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.santu.gxxc.widget.XSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/swipelayout"
-    tools:context="cn.gov.gxxc.fragment.VideoNewsListFragment">
+    tools:context="com.santu.gxxc.fragment.VideoNewsListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
@@ -11,4 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</cn.gov.gxxc.widget.XSwipeRefreshLayout>
+</com.santu.gxxc.widget.XSwipeRefreshLayout>

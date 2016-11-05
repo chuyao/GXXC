@@ -17,6 +17,7 @@
 #}
 -dontwarn com.squareup.okhttp.**
 -keeppackagenames org.jsoup.nodes
+-keeppackagenames com.sina
 -keepclassmembers class * {
     public <init> (org.json.JSONObject);
 }

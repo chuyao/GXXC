@@ -17,17 +17,20 @@ import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.model.VideoNewsModel;
 import com.umeng.analytics.MobclickAgent;
 
-public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer.OnPreparedListener{
+public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer.OnPreparedListener {
 
     private static final String TAG = "VideoNewsDetailActivity";
 
     private VideoView videoView;
+
     private TextView tvTitle, tvInfo;
     private ProgressBar progressBar;
 
     private MediaController mediaController;
 
     private AdView mAdView;
+
+    private int position;
 
 
     @Override
@@ -40,7 +43,7 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         refresh(url);
     }
 
-    private void initViews(){
+    private void initViews() {
         tvInfo = (TextView) findViewById(R.id.tv_info);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         videoView = (VideoView) findViewById(R.id.video_view);
@@ -50,12 +53,11 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         videoView.requestFocus();
 
         mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
 
-    private void refresh(String url){
+    private void refresh(String url) {
         new AsyncTask<String, Integer, VideoNewsModel>() {
             @Override
             protected VideoNewsModel doInBackground(String... params) {
@@ -65,13 +67,16 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
             @Override
             protected void onPostExecute(VideoNewsModel videoNewsModel) {
                 super.onPostExecute(videoNewsModel);
-                if(videoNewsModel != null)
+                if (videoNewsModel != null)
                     updateViews(videoNewsModel);
                 else
                     progressBar.setVisibility(View.GONE);
             }
         }.execute(url);
     }
+
+    //一周要闻片头 12秒
+    //每日新闻片头 37秒
 
     private void updateViews(VideoNewsModel model) {
         tvInfo.setText(model.getInfo());
@@ -84,6 +89,11 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
     @Override
     public void onPrepared(MediaPlayer mp) {
         progressBar.setVisibility(View.GONE);
+//        if(model.getTitle().contains("忻城新闻")) {
+//            videoView.seekTo(37);
+//        }else if(model.getTitle().contains("一周要闻")) {
+//            videoView.seekTo(12);
+//        }
         mediaController.show();
     }
 
@@ -92,8 +102,14 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         super.onResume();
         MobclickAgent.onPageStart(TAG);
         MobclickAgent.onResume(this);
-        if(mAdView != null){
+        if (mAdView != null) {
             mAdView.resume();
+        }
+        if(position != 0) {
+            progressBar.setVisibility(View.VISIBLE);
+            videoView.seekTo(position);
+            videoView.start();
+//            videoView.resume();
         }
     }
 
@@ -102,15 +118,19 @@ public class VideoNewsDetailActivity extends BaseActivity implements MediaPlayer
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
         MobclickAgent.onPause(this);
-        if(mAdView != null){
+        if (mAdView != null) {
             mAdView.pause();
         }
+//        if(videoView.canPause()) {
+//            videoView.pause();
+//            position = videoView.getCurrentPosition();
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mAdView != null){
+        if (mAdView != null) {
             mAdView.destroy();
         }
     }

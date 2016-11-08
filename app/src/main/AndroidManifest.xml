@@ -29,7 +29,13 @@
             android:label="@string/activity_text_news_detail" />
         <activity
             android:name=".activity.VideoNewsDetailActivity"
-            android:label="@string/activity_video_news_detail"></activity>
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/activity_video_news_detail">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

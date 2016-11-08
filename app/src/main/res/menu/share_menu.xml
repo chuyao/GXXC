@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/share"
+        android:icon="@mipmap/ic_launcher"
+        android:title="share"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/weixin"
+                android:title="Weixin" />
+            <item
+                android:id="@+id/weibo"
+                android:title="Weibo" />
+            <item
+                android:id="@+id/qq"
+                android:title="QQ" />
+        </menu>
+    </item>
+</menu>

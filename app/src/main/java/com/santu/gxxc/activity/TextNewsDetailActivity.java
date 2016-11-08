@@ -1,7 +1,10 @@
 package com.santu.gxxc.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -10,16 +13,22 @@ import android.widget.TextView;
 import com.santu.gxxc.R;
 import com.santu.gxxc.adapter.NewsDetailImagesAdapter;
 import com.santu.gxxc.http.JsoupManager;
+import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.TextNewsModel;
+import com.sina.weibo.sdk.api.WebpageObject;
+import com.sina.weibo.sdk.api.WeiboMessage;
+import com.sina.weibo.sdk.utils.Utility;
 import com.umeng.analytics.MobclickAgent;
 
-public class TextNewsDetailActivity extends BaseActivity {
+public class TextNewsDetailActivity extends BaseShareActivity {
 
     private static final String TAG = "TextNewsDetailActivity";
 
     private TextView tvTitle, tvInfo, tvContent;
     private GridView gvImages;
     private ProgressBar progressBar;
+    private String url;
+    private String title = "每日新闻";
 
 
     @Override
@@ -27,7 +36,7 @@ public class TextNewsDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_news_detail);
         initViews();
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
         refresh(url);
     }
 
@@ -69,6 +78,35 @@ public class TextNewsDetailActivity extends BaseActivity {
             gvImages.setNumColumns(model.getImages().size() > 3 ? 3 : model.getImages().size());
             gvImages.setAdapter(new NewsDetailImagesAdapter(this, model.getImages()));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.weibo:
+                shareWeibo();
+                break;
+            case R.id.weixin:
+                break;
+            case R.id.qq:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareWeibo() {
+        WebpageObject object = new WebpageObject();
+        object.title = title;
+        object.actionUrl = URLs.BASE_URL + url;
+        object.identify = Utility.generateGUID();
+        object.defaultText = "热点新闻";
+        String descr = title;
+        object.description = descr;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_weibo_share);
+        object.setThumbImage(bitmap);
+        WeiboMessage message = new WeiboMessage();
+        message.mediaObject = object;
+        shareToWeibo(message);
     }
 
     @Override

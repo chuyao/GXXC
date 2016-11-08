@@ -26,15 +26,13 @@
         </activity>
         <activity
             android:name=".activity.TextNewsDetailActivity"
-            android:label="@string/activity_text_news_detail" />
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/activity_text_news_detail">
+        </activity>
         <activity
             android:name=".activity.VideoNewsDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/activity_video_news_detail">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -42,11 +40,15 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
 
-        <!--<activity android:name="com.sina.weibo.sdk.demo.WBShareActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="portrait" >-->
-        <!--<intent-filter>-->
-        <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" /> </intent-filter>-->
-        <!--</activity>-->
+        <activity
+            android:name=".activity.WeiboShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"

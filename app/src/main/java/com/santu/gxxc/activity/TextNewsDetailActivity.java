@@ -15,9 +15,13 @@ import com.santu.gxxc.adapter.NewsDetailImagesAdapter;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.TextNewsModel;
+import com.santu.gxxc.util.Util;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.umeng.analytics.MobclickAgent;
 
 public class TextNewsDetailActivity extends BaseShareActivity {
@@ -67,6 +71,7 @@ public class TextNewsDetailActivity extends BaseShareActivity {
     }
 
     private void updateViews(TextNewsModel model) {
+        title = model.getTitle();
         tvTitle.setText(model.getTitle());
         tvInfo.setText(model.getInfo());
         tvContent.setText(model.getContent());
@@ -86,10 +91,14 @@ public class TextNewsDetailActivity extends BaseShareActivity {
             case R.id.weibo:
                 shareWeibo();
                 break;
-            case R.id.weixin:
+            case R.id.wx_friend:
+                shareWeixin(SendMessageToWX.Req.WXSceneSession);
                 break;
-            case R.id.qq:
+            case R.id.wx_friend_cycle:
+                shareWeixin(SendMessageToWX.Req.WXSceneTimeline);
                 break;
+//            case R.id.qq:
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -107,6 +116,18 @@ public class TextNewsDetailActivity extends BaseShareActivity {
         WeiboMessage message = new WeiboMessage();
         message.mediaObject = object;
         shareToWeibo(message);
+    }
+
+    private void shareWeixin(int scene){
+        WXWebpageObject object = new WXWebpageObject();
+        object.webpageUrl = URLs.BASE_URL + url;
+        WXMediaMessage message = new WXMediaMessage();
+        message.mediaObject = object;
+        message.title = title;
+        message.description = "忻城热点新闻";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        message.thumbData = Util.bmpToByteArray(bitmap, true);
+        shareToWeixin(message, scene, "webpage");
     }
 
     @Override

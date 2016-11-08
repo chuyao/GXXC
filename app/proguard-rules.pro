@@ -17,7 +17,12 @@
 #}
 -dontwarn com.squareup.okhttp.**
 -keeppackagenames org.jsoup.nodes
+#weibo
 -keeppackagenames com.sina
+#weixin
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
 -keepclassmembers class * {
     public <init> (org.json.JSONObject);
 }

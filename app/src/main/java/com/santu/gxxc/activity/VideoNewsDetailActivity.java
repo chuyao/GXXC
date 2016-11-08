@@ -19,11 +19,16 @@ import com.santu.gxxc.R;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.VideoNewsModel;
+import com.santu.gxxc.util.Util;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXVideoObject;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.umeng.analytics.MobclickAgent;
 
 public class VideoNewsDetailActivity extends BaseShareActivity implements MediaPlayer.OnPreparedListener {
@@ -149,16 +154,32 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         shareToWeibo(message);
     }
 
+    private void shareWeixin(int scene){
+        WXVideoObject object = new WXVideoObject();
+        object.videoUrl = URLs.BASE_URL + url;
+        WXMediaMessage message = new WXMediaMessage();
+        message.mediaObject = object;
+        message.title = title;
+        message.description = "忻城视频新闻";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        message.thumbData = Util.bmpToByteArray(bitmap, true);
+        shareToWeixin(message, scene, "video");
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.weibo:
                 shareWeibo();
                 break;
-            case R.id.weixin:
+            case R.id.wx_friend:
+                shareWeixin(SendMessageToWX.Req.WXSceneSession);
                 break;
-            case R.id.qq:
+            case R.id.wx_friend_cycle:
+                shareWeixin(SendMessageToWX.Req.WXSceneTimeline);
                 break;
+//            case R.id.qq:
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
 import com.santu.gxxc.R;
 import com.santu.gxxc.sns.Constants;
@@ -48,6 +49,10 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
     }
 
     protected void shareToWeibo(WeiboMessage message){
+        if(!weiboShareAPI.isWeiboAppInstalled()) {
+            Toast.makeText(this, "没有检测到微博客户端，请安装后再分享", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SendMessageToWeiboRequest request = new SendMessageToWeiboRequest();
         request.transaction = String.valueOf(System.currentTimeMillis());
         request.message = message;
@@ -55,6 +60,10 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
     }
 
     protected void shareToWeixin(WXMediaMessage message, int scene, String type) {
+        if(!mIWXAPI.isWXAppInstalled()){
+            Toast.makeText(this, "没有检测到微信客户端，请安装后再分享", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = message;
         req.scene = scene;
@@ -85,6 +94,7 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
         if(baseResponse != null) {
             switch (baseResponse.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
+                    Toast.makeText(this, "分享成功", Toast.LENGTH_SHORT).show();
                     break;
                 case WBConstants.ErrorCode.ERR_CANCEL:
                     break;

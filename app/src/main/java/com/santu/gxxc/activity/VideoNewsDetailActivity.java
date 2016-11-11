@@ -21,6 +21,7 @@ import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.VideoNewsModel;
 import com.santu.gxxc.util.Util;
 import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.VideoObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -49,6 +50,8 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
     private String title;
 
     private String url;
+
+    private String videoUrl;
 
 
     @Override
@@ -101,6 +104,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         tvInfo.setText(model.getInfo());
         tvTitle.setText(title);
         videoView.setVideoPath(model.getPath());
+        videoUrl = model.getPath();
         videoView.setOnPreparedListener(this);
         videoView.start();
     }
@@ -134,9 +138,12 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
     }
 
     private void shareWeibo() {
-        WebpageObject object = new WebpageObject();
+//        WebpageObject object = new WebpageObject();
+        VideoObject object = new VideoObject();
         object.title = title;
-        object.actionUrl = URLs.BASE_URL + url;
+        object.actionUrl = (videoUrl == null ? URLs.BASE_URL + url : videoUrl);
+        //http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html
+//        object.actionUrl = "http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html";
         object.identify = Utility.generateGUID();
         object.defaultText = "视频新闻";
         String descr = title;
@@ -147,6 +154,12 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
             descr = "一周要闻：" + title;
         }
         object.description = descr;
+        object.dataHdUrl = (videoUrl == null ? URLs.BASE_URL + url : videoUrl);
+        object.dataUrl = (videoUrl == null ? URLs.BASE_URL + url : videoUrl);
+        object.duration = 10;
+//        VideoObject videoObject = new VideoObject();
+
+
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_weibo_share);
         object.setThumbImage(bitmap);
         WeiboMessage message = new WeiboMessage();

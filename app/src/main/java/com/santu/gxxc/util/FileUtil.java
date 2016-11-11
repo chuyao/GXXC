@@ -17,11 +17,12 @@ public class FileUtil {
 
     public static String getQQShareLocalImage(Context context) {
         String imageName = "icon_share_local.png";
+        String imageHashName = String.valueOf(imageName.hashCode());
         File imageFile = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            imageFile = new File(context.getExternalFilesDir(null), imageName);
+            imageFile = new File(context.getExternalFilesDir(null), imageHashName);
         } else {
-            imageFile = new File(context.getFilesDir(), imageName);
+            imageFile = new File(context.getFilesDir(), imageHashName);
         }
         if (imageFile.exists())
             return imageFile.getAbsolutePath();

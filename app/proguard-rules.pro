@@ -23,6 +23,9 @@
 -keep class com.tencent.mm.sdk.** {
    *;
 }
+-keep class com.tencent.tauth.** {
+   *;
+}
 -keepclassmembers class * {
     public <init> (org.json.JSONObject);
 }

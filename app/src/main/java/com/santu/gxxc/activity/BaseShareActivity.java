@@ -1,6 +1,5 @@
 package com.santu.gxxc.activity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,14 +9,12 @@ import android.widget.Toast;
 import com.santu.gxxc.R;
 import com.santu.gxxc.sns.Constants;
 import com.sina.weibo.sdk.api.WeiboMessage;
-import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMessageToWeiboRequest;
 import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.sina.weibo.sdk.constant.WBConstants;
-import com.tencent.connect.common.UIListenerManager;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -25,8 +22,6 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
-import org.json.JSONObject;
 
 /**
  * Created by ChuyaoShi on 16/11/7.
@@ -70,12 +65,13 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
 
         @Override
         public void onError(UiError uiError) {
-
+            System.out.println("" + uiError.toString());
+            Toast.makeText(BaseShareActivity.this, "分享失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel() {
-
+            Toast.makeText(BaseShareActivity.this, "分享已取消", Toast.LENGTH_SHORT).show();
         }
     }
 

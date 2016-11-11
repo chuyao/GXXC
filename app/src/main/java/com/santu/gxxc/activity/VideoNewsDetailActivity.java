@@ -3,6 +3,7 @@ package com.santu.gxxc.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.santu.gxxc.R;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.VideoNewsModel;
+import com.santu.gxxc.util.FileUtil;
 import com.santu.gxxc.util.Util;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.VideoObject;
@@ -26,6 +28,7 @@ import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXVideoObject;
@@ -147,10 +150,10 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         object.identify = Utility.generateGUID();
         object.defaultText = "视频新闻";
         String descr = title;
-        if(title.contains("忻城新闻")) {
+        if (title.contains("忻城新闻")) {
             descr = "每日新闻：" + title;
         }
-        if(title.contains("一周要闻")) {
+        if (title.contains("一周要闻")) {
             descr = "一周要闻：" + title;
         }
         object.description = descr;
@@ -167,7 +170,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         shareToWeibo(message);
     }
 
-    private void shareWeixin(int scene){
+    private void shareWeixin(int scene) {
         WXVideoObject object = new WXVideoObject();
         object.videoUrl = URLs.BASE_URL + url;
         WXMediaMessage message = new WXMediaMessage();
@@ -177,6 +180,17 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         message.thumbData = Util.bmpToByteArray(bitmap, true);
         shareToWeixin(message, scene, "video");
+    }
+
+    private void shareQQ() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, "忻城视频新闻");
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, URLs.BASE_URL + url);
+        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, FileUtil.getQQShareLocalImage(this));
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "掌上忻城");
+        shareToQQ(bundle);
     }
 
     @Override
@@ -191,8 +205,9 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
             case R.id.wx_friend_cycle:
                 shareWeixin(SendMessageToWX.Req.WXSceneTimeline);
                 break;
-//            case R.id.qq:
-//                break;
+            case R.id.qq:
+                shareQQ();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

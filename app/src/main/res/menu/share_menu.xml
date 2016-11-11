@@ -10,7 +10,7 @@
             <item
                 android:id="@+id/wx_friend_cycle"
                 android:title="微信朋友圈"
-                android:icon="@mipmap/ic_wx_moments"/>
+                android:icon="@mipmap/ic_wx_moments_64"/>
             <item
                 android:id="@+id/wx_friend"
                 android:title="微信好友"
@@ -19,9 +19,10 @@
                 android:id="@+id/weibo"
                 android:title="新浪微博"
                 android:icon="@mipmap/ic_weibo"/>
-            <!--<item-->
-                <!--android:id="@+id/qq"-->
-                <!--android:title="QQ" />-->
+            <item
+                android:id="@+id/qq"
+                android:title="QQ"
+                android:icon="@mipmap/ic_qq_64"/>
         </menu>
     </item>
 </menu>

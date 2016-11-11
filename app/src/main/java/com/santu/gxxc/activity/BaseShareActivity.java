@@ -17,30 +17,43 @@ import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMessageToWeiboRequest;
 import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.sina.weibo.sdk.constant.WBConstants;
+import com.tencent.connect.common.UIListenerManager;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+import org.json.JSONObject;
 
 /**
  * Created by ChuyaoShi on 16/11/7.
  */
 
-public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Response{
+public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Response {
 
-    private IWeiboShareAPI weiboShareAPI;
+    private IWeiboShareAPI mWeiboShareAPI;
     private IWXAPI mIWXAPI;
+    private Tencent mTencent;
+    private QQShareUiListener mQQShareUiListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initWeiboShare();
         initWeiXinShare();
+        initQQShare();
+    }
+
+    private void initQQShare() {
+        mTencent = Tencent.createInstance(Constants.QQ_APP_ID, this.getApplicationContext());
     }
 
     private void initWeiboShare() {
-        weiboShareAPI = WeiboShareSDK.createWeiboAPI(this, Constants.WEIBO_APP_ID);
-        weiboShareAPI.registerApp();
+        mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(this, Constants.WEIBO_APP_ID);
+        mWeiboShareAPI.registerApp();
     }
 
     private void initWeiXinShare() {
@@ -48,19 +61,43 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
         mIWXAPI.registerApp(Constants.WEIXIN_APP_ID);
     }
 
-    protected void shareToWeibo(WeiboMessage message){
-        if(!weiboShareAPI.isWeiboAppInstalled()) {
+    private final class QQShareUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            Toast.makeText(BaseShareActivity.this, "分享成功", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    }
+
+    protected void shareToQQ(Bundle bundle) {
+        if (mQQShareUiListener == null)
+            mQQShareUiListener = new QQShareUiListener();
+        mTencent.shareToQQ(this, bundle, mQQShareUiListener);
+    }
+
+    protected void shareToWeibo(WeiboMessage message) {
+        if (!mWeiboShareAPI.isWeiboAppInstalled()) {
             Toast.makeText(this, "没有检测到微博客户端，请安装后再分享", Toast.LENGTH_SHORT).show();
             return;
         }
         SendMessageToWeiboRequest request = new SendMessageToWeiboRequest();
         request.transaction = String.valueOf(System.currentTimeMillis());
         request.message = message;
-        weiboShareAPI.sendRequest(this, request);
+        mWeiboShareAPI.sendRequest(this, request);
     }
 
     protected void shareToWeixin(WXMediaMessage message, int scene, String type) {
-        if(!mIWXAPI.isWXAppInstalled()){
+        if (!mIWXAPI.isWXAppInstalled()) {
             Toast.makeText(this, "没有检测到微信客户端，请安装后再分享", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -78,7 +115,7 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        weiboShareAPI.handleWeiboResponse(intent, this);
+        mWeiboShareAPI.handleWeiboResponse(intent, this);
     }
 
     @Override
@@ -91,7 +128,7 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
 
     @Override
     public void onResponse(BaseResponse baseResponse) {
-        if(baseResponse != null) {
+        if (baseResponse != null) {
             switch (baseResponse.errCode) {
                 case WBConstants.ErrorCode.ERR_OK:
                     Toast.makeText(this, "分享成功", Toast.LENGTH_SHORT).show();
@@ -101,6 +138,14 @@ public class BaseShareActivity extends BaseActivity implements IWeiboHandler.Res
                 case WBConstants.ErrorCode.ERR_FAIL:
                     break;
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mQQShareUiListener != null) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, mQQShareUiListener);
         }
     }
 }

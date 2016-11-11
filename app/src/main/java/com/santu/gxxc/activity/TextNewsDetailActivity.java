@@ -2,6 +2,7 @@ package com.santu.gxxc.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,14 +16,19 @@ import com.santu.gxxc.adapter.NewsDetailImagesAdapter;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.http.URLs;
 import com.santu.gxxc.model.TextNewsModel;
+import com.santu.gxxc.util.FileUtil;
 import com.santu.gxxc.util.Util;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.umeng.analytics.MobclickAgent;
+
+import java.net.URI;
+import java.util.List;
 
 public class TextNewsDetailActivity extends BaseShareActivity {
 
@@ -33,6 +39,7 @@ public class TextNewsDetailActivity extends BaseShareActivity {
     private ProgressBar progressBar;
     private String url;
     private String title = "每日新闻";
+    private List<String> images;
 
 
     @Override
@@ -81,7 +88,8 @@ public class TextNewsDetailActivity extends BaseShareActivity {
     private void updateGridImages(TextNewsModel model) {
         if (!model.getImages().isEmpty()) {
             gvImages.setNumColumns(model.getImages().size() > 3 ? 3 : model.getImages().size());
-            gvImages.setAdapter(new NewsDetailImagesAdapter(this, model.getImages()));
+            images = model.getImages();
+            gvImages.setAdapter(new NewsDetailImagesAdapter(this, images));
         }
     }
 
@@ -97,8 +105,9 @@ public class TextNewsDetailActivity extends BaseShareActivity {
             case R.id.wx_friend_cycle:
                 shareWeixin(SendMessageToWX.Req.WXSceneTimeline);
                 break;
-//            case R.id.qq:
-//                break;
+            case R.id.qq:
+                shareQQ();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -128,6 +137,21 @@ public class TextNewsDetailActivity extends BaseShareActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         message.thumbData = Util.bmpToByteArray(bitmap, true);
         shareToWeixin(message, scene, "webpage");
+    }
+
+    private void shareQQ(){
+        Bundle bundle = new Bundle();
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, "忻城热点新闻");
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, URLs.BASE_URL + url);
+        if(images != null && !images.isEmpty()) {
+            bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, images.get(0));
+        }else{
+            bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, FileUtil.getQQShareLocalImage(this));
+        }
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "掌上忻城");
+        shareToQQ(bundle);
     }
 
     @Override

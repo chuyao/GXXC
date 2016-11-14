@@ -77,7 +77,7 @@
             android:value="58199ddd1061d23898002cc2" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="10001" />
+            android:value="10003" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

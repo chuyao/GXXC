@@ -14,4 +14,9 @@ public class URLs {
 
     public static final String VIDEO_NEWS = BASE_URL + "/c/00030002.html";
 
+    //今日天气
+    public static final String WEATHER_TODAY = "http://i.tianqi.com/index.php?c=code&id=12&icon=1&py=xicheng";
+    //七日天气
+    public static final String WEATHER_MORE = "http://i.tianqi.com/index.php?c=code&id=12&icon=1&py=xicheng&num=5";
+
 }

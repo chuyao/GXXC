@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -103,13 +104,19 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
     //每日新闻片头 37秒
 
     private void updateViews(VideoNewsModel model) {
-        title = model.getTitle();
-        tvInfo.setText(model.getInfo());
-        tvTitle.setText(title);
-        videoView.setVideoPath(model.getPath());
-        videoUrl = model.getPath();
-        videoView.setOnPreparedListener(this);
-        videoView.start();
+        try{
+            title = model.getTitle();
+            tvInfo.setText(model.getInfo());
+            tvTitle.setText(title);
+            videoView.setVideoPath(model.getPath());
+            videoUrl = model.getPath();
+            videoView.setOnPreparedListener(this);
+            videoView.start();
+        }catch (Exception e) {
+            Toast.makeText(this, "哎呀~这个视频不能播放", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
     }
 
     @Override
@@ -172,7 +179,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
 
     private void shareWeixin(int scene) {
         WXVideoObject object = new WXVideoObject();
-        object.videoUrl = URLs.BASE_URL + url;
+        object.videoUrl = (videoUrl == null ? URLs.BASE_URL + url : videoUrl);
         WXMediaMessage message = new WXMediaMessage();
         message.mediaObject = object;
         message.title = title;

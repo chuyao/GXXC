@@ -2,6 +2,7 @@ package com.santu.gxxc.http;
 
 import com.santu.gxxc.model.TextNewsModel;
 import com.santu.gxxc.model.VideoNewsModel;
+import com.santu.gxxc.model.WeatherModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -51,7 +52,7 @@ public class JsoupManager {
                 model.setUrl(link);
                 list.add(model);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -89,7 +90,7 @@ public class JsoupManager {
             }
             String content = contentElement.text();
             model = new TextNewsModel(title, info, content, images);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return model;
@@ -119,7 +120,7 @@ public class JsoupManager {
                 model.setUrl(link);
                 list.add(model);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -137,10 +138,33 @@ public class JsoupManager {
             Element videoElement = element.select("video").first();
             String path = videoElement.select("source").first().attr("src");
             model = new VideoNewsModel(title, info, path);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return model;
+    }
+
+    /**
+     * 获取天气预报信息
+     * @return
+     */
+    public List<WeatherModel> getWeather() {
+        List<WeatherModel> list = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(URLs.WEATHER_MORE).get();
+            doc.select("div.wtleft").remove();
+            Element element = doc.getElementById("mobile4");
+            Elements elements = element.getElementsByTag("a");
+            for(Element el : elements) {
+                String detail = el.attr("title");
+                String date = el.select("div.wtline").get(0).text();
+                String image = el.getElementsByClass("pngtqico").get(0).attr("src");
+                list.add(new WeatherModel(date, detail, image));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

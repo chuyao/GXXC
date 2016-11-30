@@ -92,10 +92,13 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
             @Override
             protected void onPostExecute(VideoNewsModel videoNewsModel) {
                 super.onPostExecute(videoNewsModel);
-                if (videoNewsModel != null)
+                if (videoNewsModel != null) {
                     updateViews(videoNewsModel);
-                else
+                } else {
                     progressBar.setVisibility(View.GONE);
+                    Toast.makeText(VideoNewsDetailActivity.this, "哎呀~这个视频不能播放", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         }.execute(url);
     }
@@ -113,8 +116,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
             videoView.setOnPreparedListener(this);
             videoView.start();
         }catch (Exception e) {
-            Toast.makeText(this, "哎呀~这个视频不能播放", Toast.LENGTH_SHORT).show();
-            finish();
+
         }
 
     }

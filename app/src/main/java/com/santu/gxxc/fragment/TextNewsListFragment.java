@@ -73,6 +73,7 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
         mListView.setOnItemClickListener(this);
         swipeRefreshLayout = (XSwipeRefreshLayout) view.findViewById(R.id.swipelayout);
         swipeRefreshLayout.setOnLoadListener(onLoadListener);
+
     }
 
     final XSwipeRefreshLayout.OnLoadListener onLoadListener = new XSwipeRefreshLayout.OnLoadListener() {
@@ -117,9 +118,12 @@ public class TextNewsListFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), TextNewsDetailActivity.class);
-        intent.putExtra("url", mList.get(position).getUrl());
-        startActivity(intent);
+        TextNewsModel model = (TextNewsModel) parent.getAdapter().getItem(position);
+        if(model!=null) {
+            Intent intent = new Intent(getActivity(), TextNewsDetailActivity.class);
+            intent.putExtra("url", mList.get(position).getUrl());
+            startActivity(intent);
+        }
     }
 
     @Override

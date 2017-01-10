@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/weather"
+        android:title="weather"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/menu_more"
+        android:icon="@mipmap/ic_more_vert_white_24dp"
+        android:title="more"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/about_xc"
+                android:title="关于忻城" />
+            <item
+                android:id="@+id/aouut_me"
+                android:title="关于我们" />
+        </menu>
+    </item>
+</menu>

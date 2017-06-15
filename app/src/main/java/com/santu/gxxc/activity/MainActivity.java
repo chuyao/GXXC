@@ -1,6 +1,7 @@
 package com.santu.gxxc.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -114,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_xc:
+                Intent intent = new Intent(this, WebActivity.class);
+                intent.putExtra("url", "http://baike.sogou.com/v144080.htm?fromTitle=%E5%BF%BB%E5%9F%8E");
+                intent.putExtra("title", "关于忻城");
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 

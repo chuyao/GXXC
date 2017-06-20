@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("title", "关于忻城");
                 startActivity(intent);
                 break;
+            case R.id.about_us:
+                Intent intent1 = new Intent(this, AboutUsActivity.class);
+                startActivity(intent1);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

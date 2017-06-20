@@ -15,7 +15,7 @@
                 android:id="@+id/about_xc"
                 android:title="关于忻城" />
             <item
-                android:id="@+id/aouut_me"
+                android:id="@+id/about_us"
                 android:title="关于我们" />
         </menu>
     </item>

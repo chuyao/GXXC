@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 
 import com.santu.gxxc.R;
 import com.santu.gxxc.adapter.NewsListFragmentAdapter;
+import com.santu.gxxc.http.JsoupManager;
+import com.santu.gxxc.model.WeatherModel;
 import com.umeng.analytics.MobclickAgent;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -134,6 +137,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        updateWeather();
+    }
+
+    void updateWeather() {
+        new AsyncTask<Integer, Integer, List<WeatherModel>>(){
+
+            @Override
+            protected List<WeatherModel> doInBackground(Integer... params) {
+                return JsoupManager.getInstance().getWeather();
+            }
+
+            @Override
+            protected void onPostExecute(List<WeatherModel> weatherModels) {
+                super.onPostExecute(weatherModels);
+            }
+        };
     }
 
     @Override

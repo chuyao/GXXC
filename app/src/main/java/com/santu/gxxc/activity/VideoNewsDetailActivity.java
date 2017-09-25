@@ -14,9 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.MobileAds;
 import com.santu.gxxc.R;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.http.URLs;
@@ -47,7 +47,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
 
     private MediaController mediaController;
 
-    private AdView mAdView;
+//    private AdView mAdView;
 
     private int position;
 
@@ -62,7 +62,7 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_news_detail);
-        MobileAds.initialize(this, "ca-app-pub-5065614493130923~9863076690");
+//        MobileAds.initialize(this, "ca-app-pub-5065614493130923~9863076690");
         initViews();
         url = getIntent().getStringExtra("url");
         refresh(url);
@@ -77,9 +77,9 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         videoView.setMediaController(mediaController);
         videoView.requestFocus();
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
     }
 
     private void refresh(String url) {
@@ -139,9 +139,9 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         super.onResume();
         MobclickAgent.onPageStart(TAG);
         MobclickAgent.onResume(this);
-        if (mAdView != null) {
-            mAdView.resume();
-        }
+//        if (mAdView != null) {
+//            mAdView.resume();
+//        }
         if (position != 0) {
             progressBar.setVisibility(View.VISIBLE);
             videoView.seekTo(position);
@@ -226,9 +226,9 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
         MobclickAgent.onPause(this);
-        if (mAdView != null) {
-            mAdView.pause();
-        }
+//        if (mAdView != null) {
+//            mAdView.pause();
+//        }
         position = videoView.getCurrentPosition();
         videoView.stopPlayback();
     }
@@ -236,8 +236,8 @@ public class VideoNewsDetailActivity extends BaseShareActivity implements MediaP
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
+//        if (mAdView != null) {
+//            mAdView.destroy();
+//        }
     }
 }

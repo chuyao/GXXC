@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 
 import com.santu.gxxc.R;
 import com.santu.gxxc.adapter.NewsListFragmentAdapter;
+import com.santu.gxxc.fragment.MainFragment;
+import com.santu.gxxc.fragment.dummy.DummyContent;
 import com.santu.gxxc.http.JsoupManager;
 import com.santu.gxxc.model.WeatherModel;
 import com.umeng.analytics.MobclickAgent;
@@ -36,7 +38,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnListFragmentInteractionListener{
 
     private static final String TAG = "MainActivity";
 
@@ -159,5 +161,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
     }
 }

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/weather"
         android:title="weather"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="never"></item>
     <item
         android:id="@+id/menu_more"
         android:icon="@mipmap/ic_more_vert_white_24dp"

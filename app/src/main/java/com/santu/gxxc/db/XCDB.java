@@ -23,4 +23,32 @@ public class XCDB {
                 + COLUMN_STATUS + " )";
     }
 
+    public static class TableNews {
+        public static final String NAME = "t_news";
+        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_SUBTITLE = "subtitle";
+        public static final String COLUMN_AUTHOR = "author";
+        public static final String COLUMN_TYPE = "type";
+        public static final String COLUMN_ORIGIN = "origin";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_URL = "url";
+        public static final String COLUMN_IMAGES = "images";
+        public static final String COLUMN_VIDEOS = "videos";
+        public static final String COLUMN_TIME = "time";
+        public static final String CREATE_TABLE = "CREATE TABLE " + NAME
+                + " ("
+                + COLUMN_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_AUTHOR + " "
+                + COLUMN_CONTENT + ""
+                + COLUMN_IMAGES + ""
+                + COLUMN_ORIGIN + ""
+                + COLUMN_SUBTITLE + ""
+                + COLUMN_TITLE + ""
+                + COLUMN_TYPE + ""
+                + COLUMN_URL + ""
+                + COLUMN_VIDEOS + ""
+                + COLUMN_TIME + " )";
+    }
+
 }

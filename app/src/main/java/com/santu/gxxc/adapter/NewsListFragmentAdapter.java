@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.santu.gxxc.fragment.MainFragment;
 import com.santu.gxxc.fragment.TextNewsListFragment;
 import com.santu.gxxc.fragment.VideoNewsListFragment;
 
@@ -21,7 +22,8 @@ public class NewsListFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TextNewsListFragment();
+                return MainFragment.newInstance(3);
+//                return new TextNewsListFragment();
             case 1:
                 return new VideoNewsListFragment();
             default:

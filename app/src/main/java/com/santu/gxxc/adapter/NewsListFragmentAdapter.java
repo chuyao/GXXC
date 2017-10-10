@@ -22,7 +22,7 @@ public class NewsListFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return MainFragment.newInstance(3);
+                return MainFragment.newInstance(1);
 //                return new TextNewsListFragment();
             case 1:
                 return new VideoNewsListFragment();

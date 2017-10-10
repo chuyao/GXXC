@@ -80,4 +80,25 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
+
+    public class WeatherViewHolder extends RecyclerView.ViewHolder {
+
+        public WeatherViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class TextViewHolder extends RecyclerView.ViewHolder {
+
+        public TextViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class VideoViewHolder extends RecyclerView.ViewHolder {
+
+        public VideoViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 }

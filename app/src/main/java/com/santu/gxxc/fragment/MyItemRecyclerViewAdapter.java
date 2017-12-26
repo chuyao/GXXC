@@ -17,7 +17,7 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
@@ -28,10 +28,25 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder holder = null;
+        switch (viewType) {
+            case 0:
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather, parent, false);
+                holder =  new WeatherViewHolder(view);
+                break;
+            case 1:
+                View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_text, parent, false);
+                holder = new TextViewHolder(view1);
+                break;
+            case 2:
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);
+                holder = new TextViewHolder(view2);
+                break;
+        }
+//        View view = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.fragment_item, parent, false);
+        return holder;
     }
 
     @Override
@@ -40,21 +55,21 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+//        holder.mItem = mValues.get(position);
+//        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mContentView.setText(mValues.get(position).content);
+//
+//        holder.mView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (null != mListener) {
+//                    // Notify the active callbacks interface (the activity, if the
+//                    // fragment is attached to one) that an item has been selected.
+//                    mListener.onListFragmentInteraction(holder.mItem);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -62,24 +77,24 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
-
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
-    }
+//    public class ViewHolder extends RecyclerView.ViewHolder {
+//        public final View mView;
+//        public final TextView mIdView;
+//        public final TextView mContentView;
+//        public DummyItem mItem;
+//
+//        public ViewHolder(View view) {
+//            super(view);
+//            mView = view;
+//            mIdView = (TextView) view.findViewById(R.id.id);
+//            mContentView = (TextView) view.findViewById(R.id.content);
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return super.toString() + " '" + mContentView.getText() + "'";
+//        }
+//    }
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder {
 
